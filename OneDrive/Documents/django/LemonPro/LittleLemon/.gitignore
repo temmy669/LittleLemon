@@ -1,2 +1,49 @@
-\venv
-\pycache
+# Ignore all user-specific and system files
+Application Data/
+Cookies/
+Local Settings/
+My Documents/
+NetHood/
+PrintHood/
+Recent/
+SendTo/
+Start Menu/
+Templates/
+Desktop/
+Documents/
+Pictures/
+Videos/
+Music/
+Saved Games/
+Searches/
+ntuser.dat*
+*.tmp
+~*
+
+# Ignore virtual environments
+venv/
+.venv/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore Django migrations
+*/migrations/
+
+# Ignore other unnecessary files
+*.log
+*.bak
+*.swp
+*.tmp
