@@ -4,7 +4,7 @@ from rest_framework import status, viewsets, generics
 from rest_framework.permissions import IsAuthenticated
 from .serializers import UserSerializer
 from django.contrib.auth.models import User
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from .models import Menu, Booking
 from .serializers import MenuItemSerializer, BookingSerializer
 
@@ -13,11 +13,14 @@ from .serializers import MenuItemSerializer, BookingSerializer
 def index(request):
     return render(request, "index.html")
 
-class MenuItemsView(generics.ListCreateAPIView):
+class MenuItemsViewSet(generics.ListCreateAPIView):
     queryset = Menu.objects.all()
     serializer_class = MenuItemSerializer
+    ordering_fields = ['price', 'inventory']
+    search_fields=['title', 'category__title']
 
-class SingleMenuItemView(generics.RetrieveUpdateAPIView, generics.DestroyAPIView):
+
+class SingleMenuItemViewSet(generics.RetrieveUpdateAPIView, generics.DestroyAPIView):
     queryset = Menu.objects.all()
     serializer_class = MenuItemSerializer
 
@@ -68,3 +71,16 @@ class UserViewSet(viewsets.ModelViewSet):
         user = self.get_object()
         user.delete()
         return Response({'message': 'User Destroyed'}, status=status.HTTP_204_NO_CONTENT)
+    
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def secret(request):
+    return Response({'message': 'Some Secret Message'}, status=status.HTTP_200_OK)
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def Manager(request):
+    if request.users.groups.filter(name='Manager').exists():
+        return Response({'message': 'Manager Message'}, status=status.HTTP_200_OK)
+    else:
+        return Response({'message': 'Not a Manager'}, status=status.HTTP_401_UNAUTHORIZED)
