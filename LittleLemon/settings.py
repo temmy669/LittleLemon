@@ -98,6 +98,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LittleLemon.wsgi.application'
 
+DJOSER={"USER_ID_FIELD":"username"}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
